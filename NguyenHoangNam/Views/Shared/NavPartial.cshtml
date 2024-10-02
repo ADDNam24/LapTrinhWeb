@@ -15,7 +15,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">TRANG CHỦ</a> </li>
+                <li class="active"><a href="@Url.Action("Index","NguyenHoangNam")">TRANG CHỦ</a> </li>
                 <li><a href="#">GIỚI THIỆU</a> </li>
                 <li><a href="#">LIÊN HỆ</a> </li>
             </ul>
@@ -38,7 +38,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">Người dùng<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Đăng ký</a> </li>
+                            <li><a href="@Url.Action("DangKy","User")"><span class="glyphicon glyphicon-user"></span> Đăng ký</a> </li>
                             <li role="separator" class="divider"></li>
                             <li><a href="@Url.Action("DangNhap","DangNhap")"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
                         </ul>

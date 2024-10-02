@@ -1,0 +1,57 @@
+﻿
+@model PagedList.IPagedList<NguyenHoangNam.Models.SACH>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "SachTheoChuDe";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@{
+    var firstSach = Model.FirstOrDefault();
+    if (firstSach != null)
+    {
+        <h2 class="text-center">SÁCH THEO CHỦ ĐỀ: @firstSach.CHUDE.TenChuDe.ToUpper()</h2>
+    }
+}
+
+<hr>
+<div class="row text-center">
+    @foreach (var sach in Model)
+    {
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
+            <div class="thumbnail">
+
+                <img src="~/Images/@sach.AnhBia" alt="Thumbnail Image 1" class="img-
+responsive img-rounded imgbook" style="width:400px;">
+
+                <div class="caption">
+                    <h4 style="min-height:70px;">
+                        <a href="@Url.Action("BookDetail","NguyenHoangNam", new { id =
+sach.MaSach})">@sach.TenSach</a>
+</h4>
+<p>
+    <a href="#" class="btn btn-primary" role="button">
+
+        <span class="glyphicon glyphicon-shopping-cart" aria-
+              hidden="true"></span> Add to Cart
+
+    </a>
+</p>
+</div>
+
+</div>
+</div>
+}
+</div>
+<<nav class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+        MaximumPageNumbersToDisplay = 5,
+        DisplayPageCountAndCurrentLocation = false,
+
+    })
+</nav>

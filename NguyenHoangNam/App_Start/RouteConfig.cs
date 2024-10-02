@@ -18,7 +18,7 @@ namespace NguyenHoangNam
                 url: "danh-sach-thanh-vien",
                 defaults: new { controller = "NguyenHoangNam", action = "DanhSach" },
                 namespaces: new string[]
-                {"NguyenDucAnh.Controllers"}
+                {"NguyenHoangNam.Controllers"}
             );
 
             routes.MapRoute(

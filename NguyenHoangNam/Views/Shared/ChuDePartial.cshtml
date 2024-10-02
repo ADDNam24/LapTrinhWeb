@@ -1,12 +1,13 @@
-﻿<ul class="list-group">
+﻿@model IEnumerable<NguyenHoangNam.Models.CHUDE>
+
+<ul class="list-group">
     <li class="list-group-item active" style="font-weight:bold; text-align:center">SÁCH THEO CHỦ ĐỀ</li>
-    <a href="#" class="list-group-item">Ngoại ngữ</a>
-    <a href="#" class="list-group-item">Công nghệ thông tin</a>
-    <a href="#" class="list-group-item">Luật</a>
-    <a href="#" class="list-group-item">Văn học</a>
-    <a href="#" class="list-group-item">Khoa học kỹ thuật</a>
-    <a href="#" class="list-group-item">Nông nghiệp</a>
-    <a href="#" class="list-group-item">Lịch sử, địa lý</a>
-    <a href="#" class="list-group-item">Kinh tế</a>
-    <a href="#" class="list-group-item">Nghệ thuật sống</a>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <a href="~/NguyenHoangNam/SachTheoChuDe?id=@item.MaCD" class="list-group-item">@item.TenChuDe</a>
+        }
+    }
+   
 </ul>

@@ -1,61 +1,41 @@
-﻿
+﻿@model IEnumerable<NguyenHoangNam.Models.SACH>
 <div class="container">
-
     <h2 class="text-center">SÁCH BÁN NHIỀU</h2>
-
-    <div class="row">
+    @foreach (var item in Model)
+    {
         <div class="col-lg-6 col-md-6">
             <div class="media-object-default">
                 <div class="media">
-                    <div class="media-left"> <a href="#"> <img class="media-object imgsachbannhieu" src="~/Images/TH004.jpg" alt="placeholder image"> </a> </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Tên sản phẩm</h4>
-                        Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm.
+                    <div class="media-left" style="padding-bottom: 20px;">
+                        <a href="#">
+                            <img class="media-object imgsachbannhieu" src="~/Images/@item.AnhBia" alt="placeholder image">
+                        </a>
                     </div>
-                </div>
-                <div class="media">
-                    <div class="media-left"> <a href="#"> <img class="media-object imgsachbannhieu" src="~/Images/TH005.jpg" alt="placeholder image"> </a> </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Tên sản phẩm</h4>
-                        Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm.
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-left"> <a href="#"> <img class="media-object imgsachbannhieu" src="~/Images/TH006.jpg" alt="placeholder image"></a></div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Tên sản phẩm</h4>
-                        Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm.
+                        <h4 class="media-heading">@item.TenSach</h4>
+                        <div style="padding-top: 5px; min-height: 100px; max-height: 100px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; text-overflow: ellipsis;">
+                            @TruncateText(item.MoTa, 50)
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6">
-            <div class="media-object-default">
-                <div class="media">
-                    <div class="media-left"> <a href="#"> <img class="media-object imgsachbannhieu" src="~/Images/TH007.jpg" alt="placeholder image"></a></div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Tên sản phẩm</h4>
-                        Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm.
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-left"> <a href="#"> <img class="media-object imgsachbannhieu" src="~/Images/TH008.jpg" alt="placeholder image"></a></div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Tên sản phẩm</h4>
-                        Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm.
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-left"> <a href="#"> <img class="media-object imgsachbannhieu" src="~/Images/THCB.jpg" alt="placeholder image"></a></div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Tên sản phẩm</h4>
-                        Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm. Mô tả chi tiết sản phẩm.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- row-->
-    <hr>
+    }
 </div>
+
+@functions {
+
+    public static string TruncateText(string text, int wordLimit)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return text;
+        }
+        var words = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        if (words.Length <= wordLimit)
+        {
+            return text;
+        }
+        return string.Join(" ", words.Take(wordLimit)) + "...";
+    }
+}

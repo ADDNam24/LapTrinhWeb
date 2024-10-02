@@ -26,5 +26,7 @@ namespace NguyenHoangNam.Controllers
 
             return View();
         }
+
+
     }
 }

@@ -1,0 +1,66 @@
+﻿.thumbnail {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 700px;
+}
+
+.tensach {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.thumbnail img {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.motasach p {
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: justify;
+    color: #555;
+}
+
+.ngaycapnhat, .giaban {
+    font-size: 14px;
+    color: #777;
+    margin-top: 10px;
+    text-align: right;
+}
+
+    .giaban span {
+        font-weight: bold;
+        color: #d9534f;
+    }
+
+.addtocard {
+    display: flex;
+    justify-content: flex-end;
+    text-align:center;
+    margin-top: 20px;
+}
+
+    .addtocard .btn {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+       
+    }
+
+        .addtocard .btn:hover {
+            background-color: #4cae4c;
+        }
+
+.glyphicon-shopping-cart {
+    margin-right: 8px;
+}

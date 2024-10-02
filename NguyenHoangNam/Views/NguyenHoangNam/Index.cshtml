@@ -1,87 +1,57 @@
-﻿
+﻿@model PagedList.IPagedList<NguyenHoangNam.Models.SACH>
+@using PagedList.Mvc; 
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "TRANG CHỦ";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
+
+<style type="text/css">
+    .imgbook {
+        transition: all 1s ease-in;
+        width: 400px;
+    }
+
+        .imgbook:hover {    
+            transform: scale(0.9);
+            cursor: pointer;
+        }
+</style>
 
 <h2 class="text-center">SÁCH MỚI</h2>
 <hr>
 <div class="row text-center">
-    <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
-        <div class="thumbnail">
-            <img src="~/Images/130499.jpg" alt="Thumbnail Image 1" class="img-responsive img-rounded imgbook ">
-            <div class="caption">
-                <h3>Sản phẩm</h3>
-                <p>Mô tả tóm tắt sản phẩm</p>
-                <p><a href="#" class="btn btn-warning" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart</a></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
-        <div class="thumbnail">
-            <img src="~/Images/130318.jpg" alt="Thumbnail Image 1" class="img-responsive img-rounded imgbook">
-            <div class="caption">
-                <h3>Sản phẩm </h3>
-                <p>Mô tả tóm tắt sản phẩm</p>
-                <p><a href="#" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart</a> </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6 hidden-xs">
-        <div class="thumbnail">
-            <img src="~/Images/KT0001.jpg" alt="Thumbnail Image 1" class="img-responsive img-rounded imgbook">
-            <div class="caption">
-                <h3>Sản phẩm </h3>
-                <p>Mô tả tóm tắt sản phẩm</p>
-                <p><a href="#" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart</a> </p>
-            </div>
-        </div>
-    </div>
+    @foreach (var sach in Model)
+    {
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
+            <div class="thumbnail">
+                <img src="~/Images/@sach.AnhBia" alt="Thumbnail Image" class="img-responsive img-rounded imgbook" style="width:400px;">
 
-
-    <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
-        <div class="thumbnail">
-            <img src="~/Images/KT0003.jpg" alt="Thumbnail Image 1" class="img-responsive img-rounded imgbook">
-            <div class="caption">
-                <h3>Sản phẩm </h3>
-                <p>Mô tả tóm tắt sản phẩm</p>
-                <p><a href="#" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart</a> </p>
+                <div class="caption">
+                    <h4 style="min-height:70px;">
+                        <a href="@Url.Action("BookDetail", "NguyenHoangNam", new { id = sach.MaSach })">@sach.TenSach</a>
+                    </h4>
+                    <p>
+                        <a href="#" class="btn btn-primary" role="button">
+                            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
-        <div class="thumbnail">
-            <img src="~/Images/KT0005.jpg" alt="Thumbnail Image 1" class="img-responsive img-rounded imgbook">
-            <div class="caption">
-                <h3>Sản phẩm </h3>
-                <p>Mô tả tóm tắt sản phẩm</p>
-                <p><a href="#" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart</a> </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6 hidden-xs">
-        <div class="thumbnail">
-            <img src="~/Images/KT0007.jpg" alt="Thumbnail Image 1" class="img-responsive img-rounded imgbook">
-            <div class="caption">
-                <h3>Sản phẩm </h3>
-                <p>Mô tả tóm tắt sản phẩm</p>
-                <p><a href="#" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart</a> </p>
-            </div>
-        </div>
-    </div>
+    }
 </div>
+
+<!-- Pagination Control -->
 <nav class="text-center">
-    <!-- Add class .pagination-lg for larger blocks or .pagination-sm for smaller blocks-->
-    <ul class="pagination">
-        <li> <a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li class="disabled"><a href="#">5</a></li>
-        <li> <a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
-    </ul>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+        MaximumPageNumbersToDisplay = 5,
+        DisplayPageCountAndCurrentLocation = false,
+
+    })
 </nav>
-
-
-

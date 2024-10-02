@@ -1,12 +1,12 @@
-﻿<ul class="list-group">
-    <li class="list-group-item active" style="font-weight:bold; text-align:center">SÁCH THEO NHÀ XUẤT BẢN</li>
-    <a href="#" class="list-group-item">Nhà xuất bản Trẻ</a>
-    <a href="#" class="list-group-item">NXB Thống kê</a>
-    <a href="#" class="list-group-item">Kim đồng</a>
-    <a href="#" class="list-group-item">Đại học quốc gia</a>
-    <a href="#" class="list-group-item">Văn hóa nghệ thuật</a>
-    <a href="#" class="list-group-item">Văn hóa</a>
-    <a href="#" class="list-group-item">Lao động - Xã hội</a>
-    <a href="#" class="list-group-item">Khoa Học & Kỹ Thuật</a>
+﻿@model IEnumerable<NguyenHoangNam.Models.NHAXUATBAN>
 
+<ul class="list-group">
+    <li class="list-group-item active" style="font-weight:bold; text-align:center">SÁCH THEO NHÀ XUẤT BẢN</li>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+           <a href="~/NguyenHoangNam/SachTheoNhaXuatBan?id=@item.MaNXB" class="list-group-item">@item.TenNXB</a>
+        }
+    }
 </ul>

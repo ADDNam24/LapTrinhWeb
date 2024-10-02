@@ -7,11 +7,13 @@
     <title>@ViewBag.Title</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/bookdetail.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style type="text/css">
+
         .imgbook {
             transition: all 1s ease-in;
             width: 400px;
@@ -30,10 +32,10 @@
 </head>
 <body>
 
-    @Html.Action("NavPartial","NguyenHoangNam")
+    @Html.Action("NavPartial", "NguyenHoangNam")
 
 
-    @RenderSection("slider", required: false)
+    @Html.Action("SliderPartial", "NguyenHoangNam")
 
 
     <!-- /.container-->
@@ -41,7 +43,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 
-                @Html.Action("ChuDePartial","NguyenHoangNam")
+                @Html.Action("ChuDePartial", "NguyenHoangNam")
 
                 <br>
 
@@ -56,7 +58,7 @@
         <hr>
     </div>
     <!-- /.container-->
-    @RenderSection("sachbannhieu", required: false)
+    @Html.Action("SachBanNhieuPartial", "NguyenHoangNam")
     <!-- /.container-->
     @Html.Action("FoodterPartial", "NguyenHoangNam")
 
