@@ -35,11 +35,23 @@ namespace NguyenHoangNam.Controllers
             {
 
                 KHACHHANG kh = db.KHACHHANGs.SingleOrDefault(n => n.TaiKhoan == sTenDN && n.MatKhau == sMatkhau);
+                ADMIN ad = db.ADMINs.SingleOrDefault(n => n.TenDN == sTenDN && n.MatKhau == sMatkhau);
+                if (ad != null)
+                {
+                    Session["Admin"] = ad;
+                    Session["TaiKhoan"] = ad;
+                    return RedirectToAction("Index", "Admin", new {area = "Admin"});
+                }
+                else
+                {
+                    ViewBag.ThongBao = "Tên đăng nhập hoặc mật khẩu không đúng";
+                }
                 if (kh != null)
                 {
                     ViewBag.ThongBao = "Chúc mừng đăng nhập thành công";
                     Session["TaiKhoan"] = kh;
                     Session["TenKH"] = kh.HoTen;
+                    
                     if (collection["remember"].Contains("true"))
                     {
                         Response.Cookies["TenDN"].Value = sTenDN;
@@ -61,6 +73,8 @@ namespace NguyenHoangNam.Controllers
 
                 }
             }
+            
+   
             return RedirectToAction("Index","NguyenHoangNam");
         }
         public ActionResult DangXuat()

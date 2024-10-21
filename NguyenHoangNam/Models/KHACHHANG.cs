@@ -11,7 +11,8 @@ namespace NguyenHoangNam.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class KHACHHANG
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,16 +20,27 @@ namespace NguyenHoangNam.Models
         {
             this.DONDATHANGs = new HashSet<DONDATHANG>();
         }
-    
-        public int MaKH { get; set; }
+        [Key]
+        [Required]
+        public int MaKH { get ; set; }
+        [Required(ErrorMessage ="Ho Ten khong duoc de trong")]
         public string HoTen { get; set; }
+        [MinLength(5, ErrorMessage ="ten dang nhap it nhat 5 ky tu")]
+        [Required(ErrorMessage = "Ten dang nhap khong duoc de trong")]
         public string TaiKhoan { get; set; }
+        [Required(ErrorMessage ="Nat khau khong duoc de trong")]
+        [StringLength(15,MinimumLength = 6, ErrorMessage ="mat khau tu 6-15 ky tu")]
+        [DataType(DataType.Password)]
         public string MatKhau { get; set; }
+        [Required(ErrorMessage ="Email khong duoc de trong")]
+        [EmailAddress(ErrorMessage ="Email khong dung dinh dang")]
         public string Email { get; set; }
         public string DiaChi { get; set; }
+        [Required(ErrorMessage ="Dien thoai khong duoc de trong")]
         public string DienThoai { get; set; }
+        [Required(ErrorMessage ="Ngay xinh khong duoc de trong")]
         public Nullable<System.DateTime> NgaySinh { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DONDATHANG> DONDATHANGs { get; set; }
     }

@@ -72,7 +72,7 @@ namespace NguyenHoangNam.Controllers
             {
                 ViewBag.ThongBao = "Email đã được sử dụng";
             }
-            else
+            else if(ModelState.IsValid)
             {
                 kh.HoTen = sHoTen;
                 kh.TaiKhoan = sTenDN; kh.MatKhau = sMatKhau;
@@ -106,7 +106,79 @@ namespace NguyenHoangNam.Controllers
             // Gửi email
             mail.Send(message);
         }
+        public ActionResult DangKyThuHai()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DangKyThuHai(FormCollection collection, KHACHHANG kh)
+        {
+            var sHoTen = collection["HoTen"];
+            var sTenDN = collection["TaiKHoan"];
+            var sMatKhau = collection["MatKhau"];
+            var sMatKhauNhapLai = collection["MatKhauNL"];
+            var sDiachi = collection["DiaChi"];
+            var sEmail = collection["Email"];
+            var sDienThoai = collection["DienThoai"];
+            var dNgaySinh = String.Format("{0:MM/dd/yyyy}", collection["NgaySinh"]);
+            if (String.IsNullOrEmpty(sHoTen))
+            {
+                ViewData["err1"] = "Họ tên không được rỗng";
 
+            }
+            else if (String.IsNullOrEmpty(sTenDN))
+            {
+                ViewData["err2"] = "Tên đăng nhập không được rỗng";
+            }
+            else if (String.IsNullOrEmpty(sMatKhau))
+            {
+                ViewData["err3"] = "Phải nhập mật khẩu";
+            }
+            else if (String.IsNullOrEmpty(sMatKhauNhapLai))
+
+            {
+                ViewData["err4"] = "Phải nhập lại mật khẩu";
+            }
+
+            else if (sMatKhau != sMatKhauNhapLai)
+            {
+                ViewData["err4"] = "Mật khẩu nhập lại không khớp";
+            }
+
+            else if (String.IsNullOrEmpty(sEmail))
+            {
+                ViewData["err5"] = "Email không được rỗng";
+            }
+
+            else if (String.IsNullOrEmpty(sDienThoai))
+            {
+                ViewData["err6"] = "Số điện thoại không được rỗng";
+            }
+
+            else if (db.KHACHHANGs.SingleOrDefault(n => n.TaiKhoan == sTenDN) != null)
+            {
+                ViewBag.ThongBaoTK = "Tên đăng nhập đã tồn tại";
+            }
+
+            else if (db.KHACHHANGs.SingleOrDefault(n => n.Email == sEmail) != null)
+            {
+                ViewBag.ThongBaoEm = "Email đã được sử dụng";
+            }
+            else if (ModelState.IsValid)
+            {
+                kh.HoTen = sHoTen;
+                kh.TaiKhoan = sTenDN; kh.MatKhau = sMatKhau;
+                kh.Email = sEmail;
+                kh.DiaChi = sDiachi;
+                kh.DienThoai = sDienThoai;
+                kh.NgaySinh = DateTime.Parse(dNgaySinh);
+                db.KHACHHANGs.Add(kh);
+                db.SaveChanges();
+                GuiMailXacNhan(sEmail, sHoTen);
+                return RedirectToAction("DangNhap", "DangNhap");
+            }
+            return this.DangKy();
+        }
 
 
     }

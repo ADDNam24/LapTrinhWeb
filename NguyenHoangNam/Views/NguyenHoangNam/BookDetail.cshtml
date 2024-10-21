@@ -1,13 +1,12 @@
-﻿@model IEnumerable<NguyenHoangNam.Models.SACH>
+﻿@using NguyenHoangNam.Models
+@model IEnumerable<NguyenHoangNam.Models.SACH>
 <link rel="stylesheet" href="~/Content/bookdetail.css">
 @{
     ViewBag.Title = "BookDetail";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-
 @foreach (var item in Model)
 {
-
     <div class="thumbnail">
         <h4 class="tensach">
             @item.TenSach
@@ -19,12 +18,14 @@
             </p>
         </div>
         <p> NHÀ XUẤT BẢN: @item.NHAXUATBAN.TenNXB</p>
+        <p> Chủ đề sách: @item.CHUDE.TenChuDe </p>
         <p class="ngaycapnhat">Ngày cập nhật: @Html.FormatValue(@item.NgayCapNhat, "{0:dd/MM/yyyy}")</p>
         <p class="giaban">Giá bán: <span>@Html.FormatValue(@item.GiaBan, "{0:#,##0}") VNĐ</span></p>
         <p class="addtocard">
-            <a href="@Url.Action("AddToCard", "ShoppingCard", new { id = @item.MaSach })" class="btn btn-primary" role="button">
+            <a href="@Url.Action("ThemGioHang", "HoangNamGioHang", new { id = item.MaSach ,url = Request.Url.ToString()})" class="btn btn-primary" role="button">
                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart
             </a>
+           
         </p>
     </div>
 }

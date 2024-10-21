@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using NguyenHoangNam.Models;
 using PagedList;
+using PagedList.Mvc;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
+using System.Web.Mvc.Html;
 
 namespace NguyenHoangNam.Controllers
 {
@@ -13,20 +16,21 @@ namespace NguyenHoangNam.Controllers
     {
         // GET: NguyenHoangNam
         SachOnlineEntities db = new SachOnlineEntities();
-       /* public ActionResult Index()
-        {
-            var listSachMoi = LaySachMoi(6);
-            return View(listSachMoi);
-        }*/
+        /* public ActionResult Index()
+         {
+             var listSachMoi = LaySachMoi(6);
+             return View(listSachMoi);
+         }*/
         public ActionResult Index(int? page)
         {
-            int pageSize = 6; 
-            int pageNumber = (page ?? 1); 
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
 
-            var sachList = db.SACHes.OrderBy(s => s.MaSach).ToPagedList(pageNumber, pageSize);
+            var sachList = db.SACHes.OrderByDescending(s => s.NgayCapNhat).ToPagedList(pageNumber, pageSize);
 
             return View(sachList);
         }
+
 
 
 
@@ -54,7 +58,11 @@ namespace NguyenHoangNam.Controllers
             var listSachBanNhieu = LayBanNhieu(6);
             return PartialView(listSachBanNhieu);
         }
-
+        public ActionResult GioHangPartial()
+        {
+            
+            return PartialView("_GioHangPartial");
+        }
         public ActionResult SliderPartial()
         {
            
@@ -74,7 +82,7 @@ namespace NguyenHoangNam.Controllers
 
         private List<SACH> LaySachMoi(int count)
         {  
-            return db.SACHes.OrderByDescending(a =>a.NgayCapNhat).Take(count).ToList();
+            return db.SACHes.OrderByDescending(a => a.NgayCapNhat).Take(count).ToList();
         }
         // GET: SachOnline
         private List<SACH> LayBanNhieu(int count)
@@ -118,6 +126,7 @@ namespace NguyenHoangNam.Controllers
             var ds = db.SACHes.Where(sach => sach.MaSach == id).ToList();
             return View(ds);
         }
-
+       
+        
     }
 }

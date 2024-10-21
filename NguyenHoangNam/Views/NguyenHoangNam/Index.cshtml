@@ -1,6 +1,6 @@
 ﻿@model PagedList.IPagedList<NguyenHoangNam.Models.SACH>
-@using PagedList.Mvc; 
-
+@using PagedList.Mvc;
+@using PagedList;
 @{
     ViewBag.Title = "TRANG CHỦ";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
@@ -9,12 +9,43 @@
 <style type="text/css">
     .imgbook {
         transition: all 1s ease-in;
-        width: 400px;
+        width: 100%;
+        max-width: 400px;
     }
 
-        .imgbook:hover {    
+        .imgbook:hover {
             transform: scale(0.9);
             cursor: pointer;
+        }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+        .pagination li {
+            display: inline;
+            margin: 0 5px;
+        }
+
+            .pagination li a {
+                padding: 10px 15px;
+                border: 1px solid #ddd;
+                background-color: #f9f9f9;
+                text-decoration: none;
+                color: #333;
+                transition: background-color 0.3s;
+            }
+
+                .pagination li a:hover {
+                    background-color: #ddd;
+                }
+
+        .pagination .active a {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
         }
 </style>
 
@@ -25,14 +56,14 @@
     {
         <div class="col-sm-4 col-md-4 col-lg-4 col-xs-6">
             <div class="thumbnail">
-                <img src="~/Images/@sach.AnhBia" alt="Thumbnail Image" class="img-responsive img-rounded imgbook" style="width:400px;">
+                <img src="~/Images/@sach.AnhBia" alt="Thumbnail Image" class="img-responsive img-rounded imgbook">
 
                 <div class="caption">
                     <h4 style="min-height:70px;">
                         <a href="@Url.Action("BookDetail", "NguyenHoangNam", new { id = sach.MaSach })">@sach.TenSach</a>
                     </h4>
                     <p>
-                        <a href="#" class="btn btn-primary" role="button">
+                        <a href="@Url.Action("ThemGioHang","HoangNamGioHang",new {id = sach.MaSach,url = Request.Url.ToString()})" class="btn btn-primary" role="button">
                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart
                         </a>
                     </p>
@@ -55,3 +86,5 @@
 
     })
 </nav>
+
+

@@ -1,0 +1,92 @@
+﻿@using PagedList.Mvc;
+@using NguyenHoangNam.Models
+@using PagedList;
+@model PagedList.PagedList<NguyenHoangNam.Models.SACH>
+@{
+    ViewBag.Title = "SearchPhanTrangTuyChon";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@{
+    List<NguyenHoangNam.Models.CHUDE> cd = (List<NguyenHoangNam.Models.CHUDE>)ViewBag.cd;
+}
+<!-- Search form -->
+@using (Html.BeginForm("SearchPhanTrangTuyChon", "HoangNamSearch", FormMethod.Get))
+{
+    <p>
+        <input type="text" name="strSearch" value="@ViewBag.Search" placeholder="Nhập sản phẩm cần tìm..." size="100" />
+        <input type="submit" value="Tìm kiếm" />
+    </p>
+}
+@{
+    if (Model != null)
+    {
+        <h2>KẾT QUẢ TÌM KIẾM THEO TỪ KHÓA: @ViewBag.Search</h2>
+        <table class="table">
+            <tr>
+                <th>Tên sách</th>
+                <th>Ảnh bìa</th>
+                <th>Ngày cập nhật</th>
+                <th>Số lượng bán</th>
+                <th>Giá</th>
+                <th>Tên chủ đề</th>
+                <th>Tên NXB</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenSach)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AnhBia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayCapNhat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoLuongBan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GiaBan)
+                    </td>
+                    <td>
+                        @item.CHUDE.TenChuDe
+                    </td>
+                    <td>
+                        @item.NHAXUATBAN.TenNXB
+                    </td>
+                    <td>
+                        <a href="@Url.Action("ChiTietSach", "SachOnline", new { id = item.MaSach })">Xem chi tiết</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+}
+<!-- Page size selection form -->
+@using (Html.BeginForm("SearchPhanTrangTuyChon", "HoangNamSearch", FormMethod.Get))
+{
+    <p>
+        Kích thước trang:
+        @Html.DropDownList("size", (List<SelectListItem>)ViewBag.size, new { onchange = "this.form.submit();" })
+    </p>
+    @Html.Hidden("page", (object)ViewBag.currentPage)
+    @Html.Hidden("strSearch", (object)ViewBag.Search)
+}
+
+@if (Model != null)
+{
+    <div>Trang @(Model.PageNumber < Model.PageCount ? Model.PageNumber : 0) / @Model.PageCount</div>
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("SearchPhanTrangTuyChon", new { size = ViewBag.currentSize, page, strSearch = ViewBag.Search }))
+    </div>
+}
+
+<!-- Pagination Styling -->
+<style>
+    .MenuTrang {
+        display: inline;
+        text-align: center;
+    }
+</style>
+
