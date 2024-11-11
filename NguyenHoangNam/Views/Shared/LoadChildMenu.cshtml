@@ -1,0 +1,41 @@
+﻿@model IEnumerable<NguyenHoangNam.Models.MENU>
+@{
+    int i = 0;
+    @:<ul class="dropdown-menu">
+        foreach (var item in Model)
+        {
+            if (ViewBag.lst[i] != 0)
+            {
+                <li class="dropdown-submenu">
+                    <a href="#" class="test list-group-item">
+                        @item.MenuName <span class="caret"></span>
+                    </a>
+                    @Html.Action("LoadChildMenu", "NguyenHoangNam", new { parentId = item.Id })
+
+                </li>
+            }
+            else
+            {
+                if (item.MenuLink == null)
+                {
+                    <li><a href="">@item.MenuName</a> </li>
+
+                }
+                else
+                {
+                    if (@item.MenuLink.Contains("://"))
+                    {
+                        <li><a href="@item.MenuLink">@item.MenuName</a> </li>
+                    }
+                    else
+                    {
+                        <li><a href="~/@item.MenuLink">@item.MenuName</a> </li>
+                    }
+                }
+
+            }
+            i++;
+        }
+
+    @:</ul>
+}

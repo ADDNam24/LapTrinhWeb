@@ -1,0 +1,31 @@
+﻿@model IEnumerable<NguyenHoangNam.Models.MENU>
+@{ 
+    int i = 0;
+    @:<ul style="list-style:none; margin-left:20px;">
+
+    foreach (var item in Model)
+
+    {
+
+        <li style="border: 1px solid #808080; height: 37px;">
+
+            <span style="font-weight:bold; color: blue;">@Html.DisplayFor(modelItem => item.MenuName)</span>
+
+            <span style="float:right">
+
+                <button class="btn btn-warning" name="update" id="@item.Id">Sửa</button>
+
+                <button class="btn btn-danger" name="delete" id="@item.Id">Xóa</button>
+
+            </span>
+
+        </li>
+
+        if (ViewBag.lst[i] != 0)
+        {
+            @Html.Action("ChildMenu", "Menu", new { parentId = item.Id })
+        }
+        i++;
+    }
+    @:</ul>
+}

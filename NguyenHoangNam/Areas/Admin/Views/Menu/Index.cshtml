@@ -1,0 +1,305 @@
+﻿@model IEnumerable<NguyenHoangNam.Models.MENU>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2>DANH SÁCH MENU</h2>
+        <ul style="list-style:none">
+            @{
+                int i = 0;
+                foreach (var item in Model)
+                {
+                    <li style="border:1px solid #808080; height: 37px;">
+                        <span style="font-weight:bold; color:blue;">@Html.DisplayFor(modelItem => item.MenuName)</span>
+                        <span style="float:right">
+                            <button class="btn btn-warning" name="update" id="@item.Id">Sửa</button>
+                            <button class="btn btn-danger" name="delete" id="@item.Id">Xóa</button>
+                        </span>
+                    </li>
+                    if (ViewBag.lst[i] != 0)
+                    {
+                        @Html.Action("ChildMenu", "Menu", new { parentId = item.Id })
+                    }
+                    i++;
+                }
+            }
+
+
+
+        </ul>
+    </div>
+    <div class="col-lg-6">
+        <h2>THÊM MENU</h2>
+        <form action="AddMenu" method="post">
+            <p>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#chude" aria-expanded="false" aria-controls="collapseExample">Thêm menu từ Danh mục</button>
+            </p>
+            <div class="collapse" id="chude">
+                <div class="card card-body">
+                    @foreach (var row in ViewBag.ChuDe)
+                    {
+                        <fieldset class="form-group">
+                            <input name="MaCD" value="@row.MaCD" id="topic_@row.MaCD" type="radio" />
+                            <label for="topic_@row.MaCD">@row.TenChuDe</label>
+                        </fieldset>
+                    }
+                    <div class="dropdown">
+
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chọn menu Cha</button>
+                        <ul class="dropdown-menu">
+                            @{
+                                int j = 0;
+                                foreach (var item in Model)
+                                {
+                                    <li style="border:1px solid #808080; height: 37px;">
+                                        <input name="ParentID" value="@item.Id" id="topic_@item.Id" type="radio" />
+                                        <label for="topic_@item.Id">@item.MenuName</label>
+                                    </li>
+                                    if (ViewBag.lst[j] != 0)
+                                    {
+                                        @Html.Action("ChildMenu1", "Menu", new { parentId = item.Id })
+                                    }
+                                    j++;
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        Số thứ tự: <input type="number" required name="Number" value="1" min="1" />
+                    </div>
+                    <fieldset class="form-group">
+
+                        <input type="submit" name="ThemChuDe" value="Thêm" class="btn btn-success form-control" />
+
+                    </fieldset>
+                </div>
+            </div>
+            <p>
+
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#trangtin" aria-expanded="false" aria-controls="collapseExample">
+                    Thêm menu từ Trang tin
+                </button>
+            </p>
+            <div class="collapse" id="trangtin">
+                <div class="card card-body">
+                    @foreach (var row in ViewBag.TrangTin)
+                    {
+                        <fieldset class="form-group">
+                            <input name="MaTT" value="@row.MaTT" id="topic_@row.MaTT" type="radio" />
+                            <label for="topic_@row.MaTT">@row.TenTrang</label>
+                        </fieldset>
+                    }
+                    <div class="dropdown">
+
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Chọn menu Cha
+                        </button>
+                        <ul class="dropdown-menu">
+                            @{
+                                int k = 0;
+                                foreach (var item in Model)
+                                {
+                                    <li style="border:1px solid #808080; height: 37px;">
+                                        <input name="ParentID" value="@item.Id" id="topic_@item.Id" type="radio" />
+                                        <label for="topic_@item.Id">@item.MenuName</label>
+                                    </li>
+                                    if (ViewBag.lst[k] != 0)
+                                    {
+                                        @Html.Action("ChildMenu1", "Menu", new { parentId = item.Id })
+                                    }
+                                    k++;
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        Số thứ tự: <input type="number" required name="Number1" value="1" min="1" />
+                    </div>
+                    <fieldset class="form-group">
+
+                        <input type="submit" name="ThemTrang" value="Thêm" class="btn btn-success form-control" />
+
+                    </fieldset>
+                </div>
+            </div>
+            <p>
+
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#linktudo" aria-expanded="false" aria-controls="collapseExample">
+
+                    Thêm menu từ Link tự do
+                </button>
+            </p>
+            <div class="collapse" id="linktudo">
+
+
+
+                <div class="card card-body">
+                    <fieldset class="form-group">
+                        Tên Menu: <input type="text" name="TenMenu" />
+                    </fieldset>
+                    <fieldset class="form-group">
+                        Link: <input type="text" name="Link" />
+                    </fieldset>
+                    <div class="dropdown">
+
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Chọn menu Cha
+                        </button>
+                        <ul class="dropdown-menu">
+                            @{
+                                int h = 0;
+                                foreach (var item in Model)
+                                {
+                                    <li style="border:1px solid #808080; height: 37px;">
+                                        <input name="ParentID" value="@item.Id" id="topic_@item.Id" type="radio" />
+                                        <label for="topic_@item.Id">@item.MenuName</label>
+                                    </li>
+                                    if (ViewBag.lst[h] != 0)
+                                    {
+                                        @Html.Action("ChildMenu1", "Menu", new { parentId = item.Id })
+                                    }
+                                    h++;
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        Số thứ tự: <input type="number" required name="Number2" value="1" min="1" />
+                    </div>
+                    <fieldset class="form-group">
+
+                        <input type="submit" name="ThemLink" value="Thêm" class="btn btn-success form-control" />
+
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="modalMenu" tabindex="-1" role="dialog" aria-
+     labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="modalTitle">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <input type="hidden" id="id" value="" />
+                        <label class="col-form-label">Tên Menu: </label>
+                        <input type="text" class="form-control" id="txtTenMenu">
+                        <label class="col-form-label">Link: </label>
+
+                        11
+
+                        <input type="text" class="form-control" id="txtLink">
+                        <label class="col-form-label">Số thứ tự: </label>
+                        <input type="number" min="1" class="form-control" id="txtSTT">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSubmit">Lưu</button>
+
+                <button type="button" class="btn btn-secondary" data-
+                        dismiss="modal">
+                    Đóng
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).on('click', "button[name='delete']", function () {
+               let idMenu = $(this).closest('button[name="delete"]').attr('id');
+                $.ajax({
+                    url: '@Url.Action("Delete", "Menu")',
+                    type: 'POST',
+                    data: { id: idMenu },
+                    success: function (data) {
+                        if (data.code == 200)
+                        {
+                            alert(data.msg);
+                            location.reload();
+                        } else
+                        {
+                            alert(data.msg);
+                        }
+                }
+                });
+        })
+
+
+        $(document).on('click', "button[name='update']", function () {
+    let idMenu = $(this).closest('button[name="update"]').attr('id');
+    $.ajax({
+        url: '@Url.Action("Update","Menu")',
+        type: 'GET',
+        data: { id: idMenu },
+        success: function (data) {
+            if (data.code == 200) {
+                $('#txtTenMenu').val(data.mn.MenuName);
+                $('#txtTenMenu').prop('readonly', false);
+
+                $('#txtLink').val(data.mn.MenuLink);
+                $('#txtLink').prop('readonly', false);
+
+                $('#txtSTT').val(data.mn.OrderNumber);
+                $('#txtSTT').prop('readonly', false);
+
+                $('#btnSubmit').show();
+                $('#modalTitle').text('Cập nhật Menu');
+                $('#id').val(idMenu);
+                $('#modalMenu').modal();
+            } else {
+                alert(data.msg);
+            }
+        }
+    });
+})
+$('#btnSubmit').click(function () {
+    let strTenMenu = $('#txtTenMenu').val().trim();
+    if (strTenMenu.length == 0) {
+        alert('Vui lòng nhập tên Menu');
+        return;
+    }
+    let strLink = $('#txtLink').val().trim();
+    if (strLink.length == 0) {
+        alert('Vui lòng nhập Link');
+        return;
+    }
+    let STT = $('#txtSTT').val().trim();
+    if (STT.length == 0) {
+        alert('Vui lòng nhập STT');
+        return;
+    }
+    let idMenu = $('#id').val().trim();
+    $.ajax({
+        url: '@Url.Action("Update","Menu")',
+        type: 'POST',
+        data: {
+            id: idMenu,
+            strTenMenu: strTenMenu,
+            strLink: strLink,
+            STT: STT
+        },
+        success: function (data) {
+            if (data.code == 200) {
+                alert(data.msg);
+                $('#modalMenu').modal('hide');
+                location.reload();
+            } else {
+                alert(data.msg);
+            }
+        }
+    });
+})
+
+    </script>
+}

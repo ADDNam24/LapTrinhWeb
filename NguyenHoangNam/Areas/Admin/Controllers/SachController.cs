@@ -10,7 +10,7 @@ using System.IO;
 
 namespace NguyenHoangNam.Areas.Admin.Controllers
 {
-    public class SachController : Controller
+    public class SachController : BaseAdminController
     {
         SachOnlineEntities db = new SachOnlineEntities();
         // GET: Admin/Sach
@@ -172,5 +172,7 @@ namespace NguyenHoangNam.Areas.Admin.Controllers
             }
             return View(sach);
         }
+
+       
     }
 }

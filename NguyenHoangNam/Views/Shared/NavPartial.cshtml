@@ -1,4 +1,5 @@
-﻿<nav class="navbar navbar-inverse">
+﻿@model IEnumerable<NguyenHoangNam.Models.MENU>
+<nav class="navbar navbar-inverse">
     <!--navbar-fixed-top-->
     <div class="container">
 
@@ -15,9 +16,38 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="@Url.Action("Index","NguyenHoangNam")">TRANG CHỦ</a> </li>
-                <li><a href="#">GIỚI THIỆU</a> </li>
-                <li><a href="#">LIÊN HỆ</a> </li>
+                @{
+                    int i = 0;
+                    foreach (var item in Model)
+                    {
+                        if (ViewBag.lst[i] != 0)
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle"
+                                   data-toggle="dropdown" role="button" ariaexpanded="false" aria-haspopup="true">
+                                    @item.MenuName<span class="caret"></span>
+                                </a>
+                                @Html.Action("LoadChildMenu", "NguyenHoangNam", new
+                                {
+                               parentId = item.Id
+                                })
+                            </li>
+                        }
+                        else
+                        {
+                            if (@item.MenuLink.Contains("://"))
+                            {
+                                <li><a href="@item.MenuLink">@item.MenuName</a> </li>
+                            }
+                            else
+                            {
+                                <li><a href="~/@item.MenuLink">@item.MenuName</a> </li>
+
+                            }
+                        }
+                        i++;
+                    }
+                }
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -46,10 +76,10 @@
                 }
 
 
-                <li>@Html.Action("GioHangPartial","HoangNamGioHang") </li>
-                
-            
-                
+                <li>@Html.Action("GioHangPartial", "HoangNamGioHang") </li>
+
+
+
             </ul>
             <form class="navbar-form navbar-right" role="search" action="@Url.Action("SearchPhanTrangTuyChon","HoangNamSearch")">
                 <div class="form-group">
@@ -64,3 +94,24 @@
     </div>
     <!-- /.container-->
 </nav>
+
+<style>
+    .dropdown-submenu {
+        position: relative;
+    }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-submenu a.test').on("click", function (e) {
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>

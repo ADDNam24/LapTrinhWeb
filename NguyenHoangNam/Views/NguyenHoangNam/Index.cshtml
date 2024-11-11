@@ -7,6 +7,43 @@
 }
 
 <style type="text/css">
+    .row.text-center {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .thumbnail {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        width: 100%;
+    }
+
+        .thumbnail img {
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+    .caption {
+        flex-grow: 1;
+    }
+
+        .caption h4 {
+            height: 70px; /* Ensure the title section has consistent height */
+            overflow: hidden;
+        }
+
+    .col-sm-4, .col-md-4, .col-lg-4, .col-xs-6 {
+        display: flex;
+        margin-bottom: 20px;
+        height: 400px; /* Adjust this value as needed */
+        padding: 0 10px;
+    }
+
+
+
     .imgbook {
         transition: all 1s ease-in;
         width: 100%;

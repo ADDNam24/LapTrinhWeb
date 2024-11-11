@@ -156,7 +156,14 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChuDeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Strings.cs" />
+    <Compile Include="Areas\Admin\Controllers\DonDatHangtController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhachHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NhaXuatBanController.cs" />
     <Compile Include="Areas\Admin\Controllers\SachController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TrangTinController.cs" />
     <Compile Include="Areas\Area\AreaAreaRegistration.cs" />
     <Compile Include="Areas\Area\Controllers\HomeController.cs" />
     <Compile Include="Areas\Area\Controllers\NhaXuatBanController.cs" />
@@ -188,6 +195,9 @@
     <Compile Include="Models\KHACHHANG.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MENU.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -211,6 +221,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TACGIA.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRANGTIN.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VIETSACH.cs">
@@ -1450,6 +1463,17 @@
     <Content Include="Areas\Admin\Views\Sach\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Sach\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Sach\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NhaXuatBan\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ChuDe\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DonDatHangt\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangTin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangTin\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangTin\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangTin\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\ChildMenu.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\ChildMenu1.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
@@ -1505,6 +1529,8 @@
     <Content Include="Views\HoangNamGioHang\XacNhanDonHang.cshtml" />
     <Content Include="Views\HoangNamContent\Content.cshtml" />
     <Content Include="Views\User\DangKyThuHai.cshtml" />
+    <Content Include="Views\Shared\LoadChildMenu.cshtml" />
+    <Content Include="Views\NguyenHoangNam\TrangTin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,12 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initialscale=1">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/Scripts/js")
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/MyCSS/Style.css" rel="stylesheet" />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+
     <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
@@ -37,8 +45,29 @@
                         </a>
                     </li>
                     <li>
-                        <a href="@Url.Action("Index","DonHang")">QUẢN LÝ ĐƠN HÀNG</a>
+                        <a href="@Url.Action("Index","Menu")">QUẢN LÝ MENU</a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("Index","DonDatHangt")">QUẢN LÝ ĐƠN HÀNG</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","TrangTin")">QUẢN LÝ Trang Tin</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["Admin"] != null)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                @Session["TenDN"] <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Thông tin cá nhân</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="@Url.Action("DangXuat","Admin")"><span class="glyphicon glyphicon-log-out"></span> Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -51,5 +80,6 @@
             <p>ADMIN</p>
         </div>
     </footer>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

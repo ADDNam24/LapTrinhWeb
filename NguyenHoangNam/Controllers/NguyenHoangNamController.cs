@@ -1,4 +1,4 @@
-﻿    using NguyenHoangNam.Models;
+﻿using NguyenHoangNam.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,18 +26,29 @@ namespace NguyenHoangNam.Controllers
             int pageSize = 6;
             int pageNumber = (page ?? 1);
 
-            var sachList = db.SACHes.OrderByDescending(s => s.NgayCapNhat).ToPagedList(pageNumber, pageSize);
+            var sachList = db.SACHes.ToList().OrderByDescending(s => s.NgayCapNhat).ToPagedList(pageNumber, pageSize);
 
             return View(sachList);
         }
 
 
-
-
+        [ChildActionOnly]
         public ActionResult NavPartial()
         {
-            return PartialView();
+
+            List<MENU> lst = db.MENUs.Where(m => m.ParentId == null).OrderBy(m => m.OrderNumber).ToList();
+            int[] a = new int[lst.Count()];
+            for (int i = 0; i < lst.Count(); i++)
+            {
+                int id = lst[i].Id;
+                List<MENU> l = db.MENUs.Where(m => m.ParentId == id).ToList();
+                int k = l.Count();
+                a[i] = k;
+            }
+            ViewBag.lst = a;
+            return PartialView(lst);
         }
+
         public ActionResult ChuDePartial()
         {
             var dschude = db.CHUDEs.ToList();
@@ -95,11 +106,11 @@ namespace NguyenHoangNam.Controllers
             var ds = db.SACHes.Where(sach => sach.MaCD == id).ToList();
             return View(ds);
         }*/
-        public ActionResult SachTheoChuDe(int id, int? page)
+        public ActionResult SachTheoChuDe(int MaCD, int? page)
         {
             int pageSize = 6;
             int pageNumber = (page ?? 1);
-            var ds = db.SACHes.Where(sach => sach.MaCD == id).OrderBy(sach => sach.MaSach).ToPagedList(pageNumber, pageSize);
+            var ds = db.SACHes.Where(sach => sach.MaCD == MaCD).OrderBy(sach => sach.MaSach).ToPagedList(pageNumber, pageSize);
 
             return View(ds);
         }
@@ -126,7 +137,29 @@ namespace NguyenHoangNam.Controllers
             var ds = db.SACHes.Where(sach => sach.MaSach == id).ToList();
             return View(ds);
         }
-       
-        
+
+        [ChildActionOnly]
+        public ActionResult LoadChildMenu(int parentId)
+        {
+            List<MENU> lst = db.MENUs.Where(m => m.ParentId == parentId).OrderBy(m => m.OrderNumber).ToList();
+            ViewBag.Count = lst.Count;
+            int[] a = new int[lst.Count()];
+            for (int i = 0; i < lst.Count(); i++)
+            {
+                int id = lst[i].Id;
+                var l = db.MENUs.Where(m => m.ParentId == id).ToList();
+                int k = l.Count();
+                a[i] = k;
+            }
+            ViewBag.lst = a;
+            return PartialView("LoadChildMenu", lst);
+        }
+        public ActionResult TrangTin(string metatitle)
+        {
+            var tt = (from t in db.TRANGTINs where t.MetaTitle == metatitle select t).Single();
+            return View(tt);
+    
+        }
+
     }
 }

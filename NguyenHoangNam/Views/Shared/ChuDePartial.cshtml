@@ -1,13 +1,21 @@
 ﻿@model IEnumerable<NguyenHoangNam.Models.CHUDE>
 
 <ul class="list-group">
-    <li class="list-group-item active" style="font-weight:bold; text-align:center">SÁCH THEO CHỦ ĐỀ</li>
-    @if (Model != null)
+    <li class="list-group-item active" style="font-weight:bold; text-align:center">
+        SÁCH THEO CHỦ ĐỀ
+    </li>
+    @foreach (var item in Model)
     {
-        foreach (var item in Model)
-        {
-            <a href="~/NguyenHoangNam/SachTheoChuDe?id=@item.MaCD" class="list-group-item">@item.TenChuDe</a>
-        }
+        <li class="list-group-item">
+            <a href="@Url.Action("SachTheoChuDe", "NguyenHoangNam", new { MaCD = item.MaCD })">
+                @item.TenChuDe
+            </a>
+        </li>
     }
-   
 </ul>
+
+
+
+
+
+

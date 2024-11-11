@@ -1,0 +1,197 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<p>
+    <button class="btn btn-success" id="btnAddDH"><i class="fa fa-plus" aria-hidden="true"></i>Thêm Đơn Hàng</button>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã Đơn Hàng</th>
+            <th>Đã Thanh Toán</th>
+            <th>Tình Trạng Đơn Hàng</th>
+            <th>Ngày Đặt</th>
+            <th>Ngày Giao</th>
+            <th>Mã Khách Hàng</th>
+            <th>Mã Sách</th>
+            <th>Số Lượng</th>
+            <th>Đơn Giá</th>
+            <th class="text-right">Các chức năng</th>
+        </tr>
+    </thead>
+    <tbody id="tblDsDonHang">
+    </tbody>
+</table>
+
+<div class="modal fade" id="modalKhachHang" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="modalTitleKH">Thông Tin Đơn Hàng</div>
+                <div class="panel-body">
+                    <input type="hidden" id="maKH" value="" />
+
+                    <!-- Mã Đơn Hàng -->
+                    <div class="form-group">
+                        <label>Mã Đơn Hàng</label>
+                        <input type="number" class="form-control" id="txtMaDonHang" placeholder="Mã Đơn Hàng" required />
+                    </div>
+
+                    <!-- Đã Thanh Toán -->
+                    <div class="form-group">
+                        <label>Đã Thanh Toán</label>
+                        <select class="form-control" id="txtDaThanhToan">
+                            <option value="true">Đã Thanh Toán</option>
+                            <option value="false">Chưa Thanh Toán</option>
+                        </select>
+                    </div>
+
+                    <!-- Tình Trạng Đơn Hàng -->
+                    <div class="form-group">
+                        <label>Tình Trạng Đơn Hàng</label>
+                        <input type="number" class="form-control" id="txtTinhTrang" placeholder="Tình Trạng Đơn Hàng" required />
+                    </div>
+
+                    <!-- Ngày Đặt -->
+                    <div class="form-group">
+                        <label>Ngày Đặt</label>
+                        <input type="date" class="form-control" id="txtNgayDat" required />
+                    </div>
+
+                    <!-- Ngày Giao -->
+                    <div class="form-group">
+                        <label>Ngày Giao</label>
+                        <input type="date" class="form-control" id="txtNgayGiao" required />
+                    </div>
+
+                    <!-- Mã Khách Hàng -->
+                    <div class="form-group">
+                        <label>Mã Khách Hàng</label>
+                        <input type="number" class="form-control" id="txtMaKhachHang" placeholder="Mã Khách Hàng" required />
+                    </div>
+
+                    <!-- Mã Sách -->
+                    <div class="form-group">
+                        <label>Mã Sách</label>
+                        <input type="number" class="form-control" id="txtMaSach" placeholder="Mã Sách" required />
+                    </div>
+
+                    <!-- Giá Bán -->
+                    <div class="form-group">
+                        <label>Số Lượng</label>
+                        <input type="number" class="form-control" id="txtSoLuong" placeholder="Số Lượng" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Đơn Giá</label>
+                        <input type="number" class="form-control" id="txtDonGia" placeholder="Đơn Giá   " required />
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- Footer của Modal -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSubmitKH">Lưu</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            LoadDsDonHang();
+        });
+
+        function LoadDsDonHang() {
+            $.ajax({
+                url: '/Admin/DonDatHangt/DsDonHang', // Correct URL
+                type: 'get',
+                success: function (data) {
+                    if (data.code === 200) {
+                        $('#tblDsDonHang').empty();
+                        $.each(data.dsDonHang, function (index, ct) {
+                            let ngayDat = ct.DONDATHANG.NgayDat ? moment(ct.DONDATHANG.NgayDat).format('DD/MM/YYYY') : "";
+                            let ngayGiao = ct.DONDATHANG.NgayGiao ? moment(ct.DONDATHANG.NgayGiao).format('DD/MM/YYYY') : "";
+
+                            let row = `<tr id="${ct.MaDonHang}">
+                                            <td>${ct.MaDonHang}</td>
+                                            <td>${ct.DONDATHANG.DaThanhToan ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
+                                            <td>${ct.DONDATHANG.TinhTrangGiaoHang}</td>
+                                            <td>${ngayDat}</td>
+                                            <td>${ngayGiao}</td>
+                                            <td>${ct.DONDATHANG.MaKH}</td>
+                                            <td>${ct.MaSach}</td>
+                                            <td>${ct.SoLuong}</td>
+                                            <td>${ct.DonGia}</td>
+                                            <td class="text-right">
+                                                <button class="btn btn-info btn-sm" name="view" data-toggle="modal" data-target="#modalKhachHang"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                                <button class="btn btn-warning btn-sm" name="update" data-toggle="modal" data-target="#modalKhachHang"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                                <button class="btn btn-danger btn-sm" name="delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>`;
+                            $('#tblDsDonHang').append(row);
+                        });
+                    } else {
+                        alert(data.msg);
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                    alert('Không thể lấy dữ liệu đơn hàng');
+                }
+            });
+        }
+
+        //$('#btnAddDH').click(function () {
+        //    $('#modalTitleKH').text('Thêm mới Đơn Hàng');
+        //    $('#txtMaDonHang').val('');
+        //    $('#txtDaThanhToan').val('');
+        //    $('#txtTinhTrang').val('');
+        //    $('#txtNgayDat').val('');
+        //    $('#txtNgayGiao').val('');
+        //    $('#txtMaKhachHang').val('');
+        //    $('#txtMaSach').val('');
+        //    $('#txtSoLuong').val('');
+        //    $('#txtDonGia').val('');
+
+        //    $('#txtMaDonHang,#txtDaThanhToan, #txtTinhTrang, #txtNgayDat, #txtNgayGiao, #txtMaKhachHang, #txtMaSach,  #txtSoLuong, #txtDonGia').prop('readonly', false);
+        //    $('#btnSubmitKH').show();
+        //    $('#modalKhachHang').modal();
+        //});
+
+        //$(document).on('click', "button[name='view']", function () {
+        //    let maDH = $(this).closest('tr').attr('id');
+        //    $.ajax({
+        //        url: '/Admin/DonDatHangt/Details',
+        //        type: 'get',
+        //        data: { maDH: maDH },  // Corrected parameter name
+        //        success: function (data) {
+        //            if (data.code === 200) {
+        //                $('#txtMaDonHang').val(data.ChiTietDonHang.MaDonHang).prop('readonly', true);
+        //                $('#txtDaThanhToan').val(data.ChiTietDonHang.DONDATHANG.DaThanhToan).prop('readonly', true);
+        //                $('#txtTinhTrang').val(data.ChiTietDonHang.DONDATHANG.TinhTrangGiaoHang).prop('readonly', true);
+        //                $('#txtNgayDat').val(data.ChiTietDonHang.DONDATHANG.NgayDat).prop('readonly', true);
+        //                $('#txtNgayGiao').val(data.ChiTietDonHang.DONDATHANG.NgayGiao).prop('readonly', true);
+        //                $('#txtMaKhachHang').val(data.ChiTietDonHang.DONDATHANG.MaKH).prop('readonly', true);
+        //                $('#txtMaSach').val(data.ChiTietDonHang.MaSach).prop('readonly', true);
+        //                $('#txtSoLuong').val(data.ChiTietDonHang.SoLuong).prop('readonly', true);
+        //                $('#txtDonGia').val(data.ChiTietDonHang.DonGia).prop('readonly', true);
+        //                $('#btnSubmitKH').hide();
+
+        //                $('#modalTitleKH').text('Xem chi tiết Đơn Hàng');
+        //                $('#modalKhachHang').modal();
+        //            } else {
+        //                alert(data.msg);
+        //            }
+        //        },
+        //    });
+        //});
+    </script>
+}

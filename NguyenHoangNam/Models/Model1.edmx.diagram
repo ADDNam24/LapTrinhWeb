@@ -21,6 +21,8 @@
         <AssociationConnector Association="SachOnlineModel.FK_Sach_NXB" ManuallyRouted="false" />
         <AssociationConnector Association="SachOnlineModel.FK_VS_S" ManuallyRouted="false" />
         <AssociationConnector Association="SachOnlineModel.FK_VS_TG" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SachOnlineModel.MENU" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SachOnlineModel.TRANGTIN" Width="1.5" PointX="7.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -34,5 +34,7 @@ namespace NguyenHoangNam.Models
         public virtual DbSet<SACH> SACHes { get; set; }
         public virtual DbSet<TACGIA> TACGIAs { get; set; }
         public virtual DbSet<VIETSACH> VIETSACHes { get; set; }
+        public virtual DbSet<MENU> MENUs { get; set; }
+        public virtual DbSet<TRANGTIN> TRANGTINs { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SachOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SachOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ADMIN">
           <Key>
             <PropertyRef Name="MaAd" />
@@ -57,6 +57,16 @@
           <Property Name="DienThoai" Type="varchar" MaxLength="10" />
           <Property Name="NgaySinh" Type="smalldatetime" />
         </EntityType>
+        <EntityType Name="MENU">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MenuLink" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="OrderNumber" Type="int" />
+        </EntityType>
         <EntityType Name="NHAXUATBAN">
           <Key>
             <PropertyRef Name="MaNXB" />
@@ -89,6 +99,16 @@
           <Property Name="DiaChi" Type="nvarchar" MaxLength="100" />
           <Property Name="TieuSu" Type="ntext" />
           <Property Name="DienThoai" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="TRANGTIN">
+          <Key>
+            <PropertyRef Name="MaTT" />
+          </Key>
+          <Property Name="MaTT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenTrang" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="NoiDung" Type="ntext" />
+          <Property Name="NgayTao" Type="smalldatetime" />
+          <Property Name="MetaTitle" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="VIETSACH">
           <Key>
@@ -190,9 +210,11 @@
           <EntitySet Name="CHUDE" EntityType="Self.CHUDE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DONDATHANG" EntityType="Self.DONDATHANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KHACHHANG" EntityType="Self.KHACHHANG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MENU" EntityType="Self.MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NHAXUATBAN" EntityType="Self.NHAXUATBAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SACH" EntityType="Self.SACH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TACGIA" EntityType="Self.TACGIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRANGTIN" EntityType="Self.TRANGTIN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VIETSACH" EntityType="Self.VIETSACH" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CTDH_DDH" Association="Self.FK_CTDH_DDH">
             <End Role="DONDATHANG" EntitySet="DONDATHANG" />
@@ -223,8 +245,7 @@
             <End Role="VIETSACH" EntitySet="VIETSACH" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SachOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -459,7 +480,29 @@
             <End Role="TACGIA" EntitySet="TACGIAs" />
             <End Role="VIETSACH" EntitySet="VIETSACHes" />
           </AssociationSet>
+          <EntitySet Name="MENUs" EntityType="SachOnlineModel.MENU" />
+          <EntitySet Name="TRANGTINs" EntityType="SachOnlineModel.TRANGTIN" />
         </EntityContainer>
+        <EntityType Name="MENU">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MenuLink" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="OrderNumber" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TRANGTIN">
+          <Key>
+            <PropertyRef Name="MaTT" />
+          </Key>
+          <Property Name="MaTT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenTrang" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NgayTao" Type="DateTime" Precision="0" />
+          <Property Name="MetaTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -565,6 +608,28 @@
                 <ScalarProperty Name="MaSach" ColumnName="MaSach" />
                 <ScalarProperty Name="VaiTro" ColumnName="VaiTro" />
                 <ScalarProperty Name="ViTri" ColumnName="ViTri" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MENUs">
+            <EntityTypeMapping TypeName="SachOnlineModel.MENU">
+              <MappingFragment StoreEntitySet="MENU">
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="MenuLink" ColumnName="MenuLink" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANGTINs">
+            <EntityTypeMapping TypeName="SachOnlineModel.TRANGTIN">
+              <MappingFragment StoreEntitySet="TRANGTIN">
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="TenTrang" ColumnName="TenTrang" />
+                <ScalarProperty Name="MaTT" ColumnName="MaTT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

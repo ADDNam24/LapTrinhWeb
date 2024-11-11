@@ -45,6 +45,12 @@ namespace NguyenHoangNam.Areas.Admin.Controllers
             }
             return View();
         }
+        public ActionResult DangXuat()
+        {
+            Session["Admin"] = null;
+
+            return RedirectToAction("Login", "Admin");
+        }
     }
     
 }
